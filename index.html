@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1">
+		<title>Crypto fiddle</title>
+		<style type="text/css">
+			#container {
+				height: 98%;
+				width: 98%;
+				position: absolute;
+				left: 1%;
+				top: 1%;
+				z-index:-1;
+			}
+
+			body {
+				font-family: helvetica, arial sans-serif;
+				color:#333;
+			}
+
+			a {
+				text-decoration: none;
+			}
+			
+			#zoom{
+				font-size: 0.8em;
+			}
+
+		</style>
+	</head>
+	<body>
+		<span id="zoom"> 
+			<a href="#!/years">The last years</a>  |	
+			<a href="#!/weeks">The last weeks</a> |
+			<a href="#!/hours">The last hours</a>
+		</span>
+		<div id="container"></div>
+		<script src="http://unpkg.com/navigo@6"></script>
+		<script src="http://unpkg.com/jquery"></script>
+		<script src="http://unpkg.com/highcharts@6/highstock.js"></script>
+		<script src="http://unpkg.com/alasql"></script>
+		<script src="exe.js"></script>
+	</body>
+</html>
