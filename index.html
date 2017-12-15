@@ -3,43 +3,53 @@
 	<head>
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width,initial-scale=1">
-		<title>Crypto fiddle</title>
-		<style type="text/css">
-			#container {
-				height: 98%;
-				width: 98%;
-				position: absolute;
-				left: 1%;
-				top: 1%;
-				z-index:-1;
-			}
-
-			body {
-				font-family: helvetica, arial sans-serif;
-				color:#333;
-			}
-
-			a {
-				text-decoration: none;
-			}
-			
-			#zoom{
-				font-size: 0.8em;
-			}
-
-		</style>
+		<title>CryptoFiddle.com</title>
+    <!--link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.1/css/bulma.min.css"-->
+ 		<link rel="stylesheet" href="https://unpkg.com/purecss@1.0.0/build/pure-min.css">
+ 		<link rel="stylesheet" href="style.css" type="text/css">
 	</head>
 	<body>
-		<span id="zoom"> 
-			<a href="#!/years">The last years</a>  |	
-			<a href="#!/weeks">The last weeks</a> |
-			<a href="#!/hours">The last hours</a>
-		</span>
-		<div id="container"></div>
-		<script src="http://unpkg.com/navigo@6"></script>
-		<script src="http://unpkg.com/jquery"></script>
-		<script src="http://unpkg.com/highcharts@6/highstock.js"></script>
-		<script src="http://unpkg.com/alasql"></script>
+
+  <!--section class="section">
+    <div class="container">
+      <h1 class="title">
+        Hello World
+      </h1>
+      <p class="subtitle">
+        My first website with <strong>Bulma</strong>!
+      </p>
+    </div>
+  </section-->
+
+
+		<div id="loading"></div>
+
+
+		<div id="timeframe"> 
+
+			<div class="pure-menu pure-menu-horizontal">
+			    <ul class="pure-menu-list">
+			        <li class="pure-menu-item"><a class="pure-menu-link" href="#!/years">Recent years</a></li>
+			        <li class="pure-menu-item"><a class="pure-menu-link" href="#!/weeks">Recent weeks</a></li>
+			        <li class="pure-menu-item"><a class="pure-menu-link" href="#!/hours">Recent hours</a></li>
+			    </ul>
+			</div>
+
+
+
+			 
+			 
+			
+		</div>
+
+		<div id="graph"></div>
+
+		<script src="https://unpkg.com/navigo@6"></script>
+		<script src="https://unpkg.com/jquery"></script>
+		<script src="https://unpkg.com/highcharts@6/highstock.js"></script>
+		<!--script src="https://unpkg.com/highcharts@6/modules/exporting.js"></script-->
+		<script src="https://unpkg.com/alasql"></script>
 		<script src="exe.js"></script>
 	</body>
 </html>
+

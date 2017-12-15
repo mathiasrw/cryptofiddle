@@ -1,4 +1,19 @@
+/*
+/
+/	Warning!
+/
+/	This file contains 1999-era javascript code structures. 
+/
+/	If it hurts your eyes pleas make a PR:
+/
+/	github.com/mathiasrw/cryptofiddle
+/
+*/
+
+// Todo:
 // https://min-api.cryptocompare.com/data/all/coinlist
+// http://jsfiddle.net/trekvnc2/
+// https://www.w3schools.com/howto/tryit.asp?filename=tryhow_js_sidenav
 
 var
 	names = ['BTC', 'ETH', 'LTC', 'DASH'],
@@ -21,6 +36,12 @@ Qnames = ['REP','ARK','STEEM','LSK'];
 qnames = ['DCR','SALT','SC','CVC','ZRX'];
 Qnames = ['ANT','ENG','SNM','DMD', 'YYW'];
 Qnames = ['SHIFT','CRW','SLT','SWT','PURA'];
+
+
+
+
+
+
 
 
 intervals = {
@@ -115,10 +136,11 @@ var rute = new Navigo(null, true, '#!');
 rute
 	.on(urlifyState)
 	.on('/:coins/in/:nomination/recent/:scale', function (input) {
-		$('#container').fadeOut();
-		names = input.coins.replace(/^-|-$/, '').split('-');
-		nomination = input.nomination;
-		frame = frames[input.scale] || frames[defaultFrame];
+		$('#loading').show();
+		$('#container').fadeTo(0.5);
+		names = input.coins.replace(/^-|-$/, '').toUpperCase().split('-');
+		nomination = input.nomination.toUpperCase();
+		frame = frames[input.scale.toLowerCase()] || frames[defaultFrame];
 		seriesOptions = [],
 		seriesCounter = 0,
 		fetch();		
@@ -154,12 +176,11 @@ function fetch(){
 					data: alasql("MATRIX OF SELECT `time`*1000, `close` FROM ?", [data.Data])
 				};
 
-				// As we're loading the data asynchronously, we don't know what order it will arrive. So
-				// we keep a counter and create the chart when all the data is loaded.
 				seriesCounter += 1;
 
 				if (seriesCounter === names.length) {
-					$('#container').fadeIn()
+					$('#loading').fadeOut();
+					$('#container').fadeIn();
 					createChart(seriesOptions, names, nomination);
 				}
 			});
@@ -170,7 +191,7 @@ function fetch(){
 
 function createChart(seriesOptions, coins, nomination) {
 
-		Highcharts.stockChart('container', {
+		Highcharts.stockChart('graph', {
 
 			title: {
 				text: 'Relative development of crypto coins the ' + frame.name.toLowerCase()
@@ -202,7 +223,7 @@ function createChart(seriesOptions, coins, nomination) {
 			tooltip: {
 				pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>{point.y}</b> ({point.change}%)<br/>',
 				valueDecimals: 1,
-				split: false
+				split: seriesOptions.length<=4?true:false,
 			},
 
 			series: seriesOptions
@@ -218,3 +239,39 @@ Highcharts.theme = {
 };
 
 Highcharts.setOptions(Highcharts.theme);
+
+
+
+
+function dynamicSort(property) {
+    var sortOrder = 1;
+    if(property[0] === "-") {
+        sortOrder = -1;
+        property = property.substr(1);
+    }
+    return function (a,b) {
+        var result = (a[property] < b[property]) ? -1 : (a[property] > b[property]) ? 1 : 0;
+        return result * sortOrder;
+    }
+}
+
+
+
+
+var coins = [];
+
+$.getJSON('https://min-api.cryptocompare.com/data/all/coinlist', function(coinlist) {
+	$.each(coinlist.Data, function(i, coin) {
+		coins.push({
+			name:coin.CoinName,	
+			symbol:coin.Symbol,
+			rank:parseInt(coin.SortOrder),
+			img:coinlist.BaseImageUrl+coin.ImageUrl,
+		});
+	});
+	console.log(coins.sort(dynamicSort('rank')));
+});
+
+
+
+
