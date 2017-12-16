@@ -6,6 +6,7 @@
 	top: 1%;
 	z-index:-1;
 	background-color: #fff;
+	display:none;
 }
 
 body {
@@ -26,7 +27,6 @@ a {
 }
 
 #menu{
-	display:none;
 	font-size: 0.8em;
 	position:absolute;
 	top:3px;
@@ -46,6 +46,9 @@ a {
 	height: 50px;
 	border-radius: 18px;
 	border:10px solid #333;
+	Qborder:10px solid #FFE200;
+	Qbackground-color: #FFE200;
+	Qbackground-color: #333;
 	animation-name: spin;
 	animation-duration: 800ms;
 	animation-iteration-count: infinite;
@@ -56,4 +59,39 @@ a {
 	to {transform:rotate(90deg);}
 }
 
+ .button-success,
+.button-error,
+.button-warning,
+.button-secondary,
+.button-pink {
+	color: white;
+	border-radius: 4px;
+	text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+
+}
+
+.pure-menu-link:hover,
+.pure-button{
+	box-shadow: 0 3px 1px -2px rgba(0,0,0,.2), 0 2px 2px 0 rgba(0,0,0,.14), 0 1px 5px 0 rgba(0,0,0,.12);
+}
+
+.pure-menu-link{
+	border-radius: 4px;
+}
+
+.button-success {
+	background: rgb(28, 184, 65); /* this is a green */
+}
+
+.button-pink {
+	background: #ff4081;
+}
+
+@media print
+{    
+    .no-print, .no-print *
+    {
+        display: none !important;
+    }
+}
 

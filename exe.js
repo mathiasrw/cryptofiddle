@@ -14,28 +14,32 @@
 // https://min-api.cryptocompare.com/data/all/coinlist
 // http://jsfiddle.net/trekvnc2/
 // https://www.w3schools.com/howto/tryit.asp?filename=tryhow_js_sidenav
+// https://purecss.io
+// https://github.com/toomuchdesign/offside - insert link to cryptocompare
 
 var
-	names = ['BTC', 'ETH', 'LTC', 'DASH'],
+	coins = ['BTC', 'ETH', 'LTC', 'DASH'],
 	nomination = 'USD',
 	seriesOptions = [],
 	seriesCounter = 0,
-	defaultFrame = 'hours';
+	defaultFrame = 'hours',
+	coinlist = JSON.parse(localStorage.getItem("coinlist")||'{}');
+
 
 // few
-names = ['BTC', 'BCH', 'EOS', 'ETH', 'IOT', 'XRP', 'LTC'];
+coins = ['BTC', 'BCH', 'EOS', 'ETH', 'IOT', 'XRP', 'LTC'];
 
-Qnames = ['BTC'];
+Qcoins = ['BTC'];
 
 // many
-Qnames = ['BTC', 'BCH', 'EOS', 'ETH', 'IOT', 'XRP', 'LTC', 'ZEC', 'NEO', 'DASH', 'XMR'];
+Qcoins = ['BTC', 'BCH', 'EOS', 'ETH', 'IOT', 'XRP', 'LTC', 'ZEC', 'NEO', 'DASH', 'XMR'];
 
 // Crazy
-Qnames = ['MONA', 'ZEN','SKY','ARDR', 'MCO'];
-Qnames = ['REP','ARK','STEEM','LSK'];
-qnames = ['DCR','SALT','SC','CVC','ZRX'];
-Qnames = ['ANT','ENG','SNM','DMD', 'YYW'];
-Qnames = ['SHIFT','CRW','SLT','SWT','PURA'];
+Qcoins = ['MONA', 'ZEN','SKY','ARDR', 'MCO'];
+Qcoins = ['REP','ARK','STEEM','LSK'];
+qcoins = ['DCR','SALT','SC','CVC','ZRX'];
+Qcoins = ['ANT','ENG','SNM','DMD', 'YYW'];
+Qcoins = ['SHIFT','CRW','SLT','SWT','PURA'];
 
 
 
@@ -136,7 +140,7 @@ var rute = new Navigo(null, true, '#!');
 rute
 	.on(urlifyState)
 	.on('/:coins/in/:nomination/recent/:scale', function (input) {
-		names = input.coins.replace(/^-|-$/, '').toUpperCase().split('-');
+		coins = input.coins.replace(/^-|-$/, '').toUpperCase().split('-');
 		nomination = input.nomination.toUpperCase();
 		frame = frames[input.scale.toLowerCase()] || frames[defaultFrame];
 		seriesOptions = [],
@@ -159,22 +163,22 @@ rute
 
 function urlifyState(){
 	$('#graph').fadeOut();
-	rute.navigate(['',names.join('-'), 'in' , nomination, 'recent' , defaultFrame].join('/').toLowerCase());
+	rute.navigate(['',coins.join('-'), 'in' , nomination, 'recent' , defaultFrame].join('/').toLowerCase());
 }
 
 
 function fetch(cb){
-	$.each(names, function(i, name) {
-			$.getJSON('https://min-api.cryptocompare.com'+frame.urlpath+'?fsym=' + name.toUpperCase() + '&tsym=' + nomination.toUpperCase() + '&limit=2000&aggregate=1', function(data) {
+	$.each(coins, function(i, symbol) {
+			$.getJSON('https://min-api.cryptocompare.com'+frame.urlpath+'?fsym=' + symbol.toUpperCase() + '&tsym=' + nomination.toUpperCase() + '&limit=2000&aggregate=1', function(data) {
 				seriesOptions[i] = {
-					name: name,
+					name: getName(symbol, true),
 					data: alasql("MATRIX OF SELECT `time`*1000, `close` FROM ?", [data.Data])
 				};
 
 				seriesCounter += 1;
 
-				if (seriesCounter === names.length) {
-					createChart(seriesOptions, names, nomination);
+				if (seriesCounter === coins.length) {
+					createChart(seriesOptions, coins, nomination);
 					if(cb){
 						cb();
 					}
@@ -187,6 +191,7 @@ function fetch(cb){
 
 var graph = {};
 
+
 function createChart(seriesOptions, coins, nomination) {
 
 		graph = Highcharts.stockChart('graph', {
@@ -194,7 +199,7 @@ function createChart(seriesOptions, coins, nomination) {
 				text: 'Relative development of crypto coins the ' + frame.name.toLowerCase()
 			},
 			subtitle: {
-				text: 'Priced in ' + nomination 
+				text: getSubtitle()
 			},
 			rangeSelector: frame.rangeSelector,
 			yAxis: {
@@ -240,6 +245,59 @@ Highcharts.setOptions({
 });
 
 
+function setSubtitle(){
+	graph.setTitle(null, { text: getSubtitle()});
+}
+
+function getSubtitle(){
+	data = [];
+	$.each(coins, function(i, symbol){
+		var msg = symbol;
+		if(coinlist[symbol]){
+			msg = coinlist[symbol].name;
+		}
+		data.push(msg);
+	});
+	
+	if(1<data.length){
+		data[data.length-1] = 'and '+data[data.length-1];
+	}
+
+	return data.join(', ') + ' priced in ' + nomination;
+
+}
+
+function getName(symbol, full){
+	if(!coinlist[symbol]){
+		return symbol;
+	}
+	if(full){
+		return coinlist[symbol].fullName;
+	}
+	return coinlist[symbol].name;
+}
+
+
+
+	
+
+$.getJSON('https://min-api.cryptocompare.com/data/all/coinlist', function(res) {
+		console.log(res.Data['BCH']);
+
+	$.each(res.Data, function(i, coin) {
+		coinlist[coin.Symbol]={
+			name:coin.CoinName,	
+			symbol:coin.Symbol,
+			fullName:coin.FullName,	
+			rank:parseInt(coin.SortOrder),
+			img:coinlist.BaseImageUrl+coin.ImageUrl,
+		};
+	});
+
+	localStorage.setItem("coinlist", JSON.stringify(coinlist));
+	//console.log(coinlist.sort(dynamicSort('rank')));
+});
+
 
 
 function dynamicSort(property) {
@@ -253,24 +311,5 @@ function dynamicSort(property) {
         return result * sortOrder;
     }
 }
-
-
-
-
-var coins = [];
-
-$.getJSON('https://min-api.cryptocompare.com/data/all/coinlist', function(coinlist) {
-	$.each(coinlist.Data, function(i, coin) {
-		coins.push({
-			name:coin.CoinName,	
-			symbol:coin.Symbol,
-			rank:parseInt(coin.SortOrder),
-			img:coinlist.BaseImageUrl+coin.ImageUrl,
-		});
-	});
-	console.log(coins.sort(dynamicSort('rank')));
-});
-
-
 
 
