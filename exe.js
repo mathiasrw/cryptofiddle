@@ -136,14 +136,12 @@ var rute = new Navigo(null, true, '#!');
 rute
 	.on(urlifyState)
 	.on('/:coins/in/:nomination/recent/:scale', function (input) {
-		$('#loading').show();
-		$('#container').fadeTo(0.5);
 		names = input.coins.replace(/^-|-$/, '').toUpperCase().split('-');
 		nomination = input.nomination.toUpperCase();
 		frame = frames[input.scale.toLowerCase()] || frames[defaultFrame];
 		seriesOptions = [],
 		seriesCounter = 0,
-		fetch();		
+		fetch(function(){$('#graph').fadeIn()});		
 	})
 	.on('/hours', function () {
 		defaultFrame = 'hours';
@@ -160,17 +158,14 @@ rute
 	.resolve();
 
 function urlifyState(){
-	$('#container').fadeOut();
+	$('#graph').fadeOut();
 	rute.navigate(['',names.join('-'), 'in' , nomination, 'recent' , defaultFrame].join('/').toLowerCase());
 }
 
 
-function fetch(){
+function fetch(cb){
 	$.each(names, function(i, name) {
-
 			$.getJSON('https://min-api.cryptocompare.com'+frame.urlpath+'?fsym=' + name.toUpperCase() + '&tsym=' + nomination.toUpperCase() + '&limit=2000&aggregate=1', function(data) {
-
-
 				seriesOptions[i] = {
 					name: name,
 					data: alasql("MATRIX OF SELECT `time`*1000, `close` FROM ?", [data.Data])
@@ -179,9 +174,10 @@ function fetch(){
 				seriesCounter += 1;
 
 				if (seriesCounter === names.length) {
-					$('#loading').fadeOut();
-					$('#container').fadeIn();
 					createChart(seriesOptions, names, nomination);
+					if(cb){
+						cb();
+					}
 				}
 			});
 
@@ -189,10 +185,11 @@ function fetch(){
 		});
 }
 
+var graph = {};
+
 function createChart(seriesOptions, coins, nomination) {
 
-		Highcharts.stockChart('graph', {
-
+		graph = Highcharts.stockChart('graph', {
 			title: {
 				text: 'Relative development of crypto coins the ' + frame.name.toLowerCase()
 			},
@@ -234,11 +231,13 @@ function createChart(seriesOptions, coins, nomination) {
 
 
 
-Highcharts.theme = {
-	"colors": ['#F9C80E', '#854CBA', '#55BF3B', '#ff0066', '#2288CC', '#DD3322', '#bb4488', '#99aa00', '#5885BC'],
-};
 
-Highcharts.setOptions(Highcharts.theme);
+Highcharts.setOptions({
+	"colors": ['#F9C80E', '#854CBA', '#55BF3B', '#ff0066', '#2288CC', '#DD3322', '#bb4488', '#99aa00', '#5885BC'],
+	global: {
+        useUTC: false,
+    }
+});
 
 
 

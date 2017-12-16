@@ -25,6 +25,15 @@ a {
 	z-index:999;
 }
 
+#menu{
+	display:none;
+	font-size: 0.8em;
+	position:absolute;
+	top:3px;
+	right: 3px;
+	z-index:999;
+}
+
 #loading {
 	z-index:-1000;
 	position:absolute;
