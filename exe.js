@@ -138,7 +138,7 @@ var frame = frames[defaultFrame];
 
 var rute = new Navigo(null, true, '#!');
 rute
-	.on(urlifyState)
+	.on(gotoState)
 	.on('/:coins/in/:nomination/recent/:scale', function (input) {
 		coins = input.coins.replace(/^-|-$/, '').toUpperCase().split('-');
 		nomination = input.nomination.toUpperCase();
@@ -149,21 +149,45 @@ rute
 	})
 	.on('/hours', function () {
 		defaultFrame = 'hours';
-		urlifyState()
+		gotoState();
 	})	
 	.on('/weeks', function () {
 		defaultFrame = 'weeks';
-		urlifyState()
+		gotoState();
 	})	
 	.on('/years', function () {
 		defaultFrame = 'years';
-		urlifyState()
+		gotoState();
 	})
-	.resolve();
+	.on('/about', function () {
+		document.getElementById("modal-about").style.width = "400px";
+	})
+.resolve();
 
-function urlifyState(){
-	$('#graph').fadeOut();
+
+$('.closebtn').click(function(event){
+	document.getElementById("modal-about").style.width = "0px";
+
+	gotoState(true);
+
+
+	event.preventDefault();
+    event.stopPropagation();
+
+});	
+
+function gotoState(avoidAction){
+	if(avoidAction){
+		rute.pause();
+	} else {
+		$('#graph').fadeOut();
+	}
+
 	rute.navigate(['',coins.join('-'), 'in' , nomination, 'recent' , defaultFrame].join('/').toLowerCase());
+
+	if(avoidAction){
+		rute.resume(); 
+	}
 }
 
 
