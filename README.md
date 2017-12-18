@@ -1,6 +1,6 @@
 # CryptoFiddle.com
 
-_See how your crypto peformed_
+_See the relative development of crypto coins_
 
 This is the source of [CryptoFiddle.com](http://CryptoFiddle.com) and is based on data from www.cryptocompare.com
 
