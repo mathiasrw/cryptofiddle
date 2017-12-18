@@ -8,7 +8,6 @@ This is the source of [CryptoFiddle.com](http://CryptoFiddle.com) and is based o
 
 ### Ideas to implement
 
-- Add "what is this"
 - User friendly selection of coins
 - User friendly selection of denomination (priced in X)
 - Remember selected coins in browser
