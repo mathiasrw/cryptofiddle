@@ -1,0 +1,27 @@
+{
+  "name": "cryptofiddle",
+  "version": "4.0.0",
+  "description": "How did your crypto-coins perform?",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo 'GO'",
+    "build": " parcel build src/index.html --public-url '/'",
+    "start": "parcel src/index.html",
+    "publish": "npm run build && surge ./dist/ cryptofiddle.com"
+  },
+  "author": "mathiasrw",
+  "license": "MIT",
+  "dependencies": {
+    "pubsubway": "^0.21.0",
+    "alasql": "^0.4.4",
+    "highcharts": "^6.0.4",
+    "jquery": "^3.2.1",
+    "navigo": "^7.0.0",
+    "r2": "^2.0.0"
+  },
+  "devDependencies": {
+    "parcel-bundler": "^1.4.1",
+    "purecss": "^1.0.0",
+    "typescript": "^2.6.2"
+  }
+}

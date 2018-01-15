@@ -1,0 +1,177 @@
+#graph {
+	height: 98%;
+	width: 98%;
+	position: absolute;
+	left: 1%;
+	top: 1%;
+	z-index:-1;
+	background-color: #fff;
+	display:none;
+}
+
+body {
+	font-family: helvetica, arial sans-serif;
+	color:#333;
+}
+
+a {
+	text-decoration: none;
+}
+
+#timeframe{
+	font-size: 0.8em;
+	position:absolute;
+	top:3px;
+	left: 3px;
+	z-index:10;
+}
+
+#menu{
+	font-size: 0.8em;
+	position:absolute;
+	top:3px;
+	right: 3px;
+	z-index:10;
+	Qdisplay:none;
+}
+
+#tagline,
+#loading {
+	z-index:-10;
+	position:absolute;
+	margin-left: auto;
+	margin-right: auto;
+	left:0;
+	right:0;
+	text-align: center;
+}
+
+#tagline{
+	top:50%;
+}
+
+#loading {
+	top:40%;
+	width: 50px;
+	height: 50px;
+	border-radius: 18px;
+	border:10px solid #333;
+	Qbackground-color: #FFE200;
+	Qbackground-color: #333;
+	animation-name: spin;
+	animation-duration: 800ms;
+	animation-iteration-count: infinite;
+	animation-timing-function: linear;    
+
+	width: 7.8vmin;
+	height: 7.8vmin;
+	border-radius: 3vmin;
+	border: 1.2vmin solid #333;
+
+
+
+
+
+}
+
+
+
+@keyframes spin {
+	from {transform:rotate(0deg);}
+	to {transform:rotate(90deg);}
+}
+
+ .button-success,
+.button-error,
+.button-warning,
+.button-secondary,
+.button-pink {
+	color: white;
+	border-radius: 4px;
+	text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+
+}
+
+.pure-menu-link:hover,
+.pure-button{
+	box-shadow: 0 3px 1px -2px rgba(0,0,0,.2), 0 2px 2px 0 rgba(0,0,0,.14), 0 1px 5px 0 rgba(0,0,0,.12);
+}
+
+.pure-menu-link{
+	border-radius: 4px;
+}
+
+.button-success {
+	background: rgb(28, 184, 65); /* this is a green */
+}
+
+.button-pink {
+	background: #ff4081;
+}
+
+@media print
+{    
+    .no-print
+    {
+        display: none;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+.sidenav {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 100;
+    top: 0;
+    right: 0;
+    background-color: #333;
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 60px;
+    color:#f1f1f1;
+    
+}
+
+.sidenav>div{
+	padding: 0 15px;
+}
+
+
+.sidenav a {
+    Qpadding: 8px 8px 8px 32px;
+    text-decoration: none;
+    color: #818181;
+    color: #ff4081;
+    Qdisplay: block;
+    transition: 0.3s;
+}
+
+.sidenav a:hover {
+    color: #f1f1f1;
+    color: #818181;
+}
+
+.sidenav .closebtn {
+    position: absolute;
+    top: 0;
+    right: 25px;
+    font-size: 36px;
+    margin-left: 50px;
+}
+
+@media screen and (max-height: 450px) {
+  .sidenav {padding-top: 15px;}
+  .sidenav a {font-size: 18px;}
+}
