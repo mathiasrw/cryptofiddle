@@ -22,8 +22,9 @@ declare var alasql: typeof alasql;
 declare const go: any;
 declare const Highcharts: any;
 declare const $: any;
+var data;
 
-var coins = ['BTC', 'ETH', 'LTC', 'DASH'],
+var coins = ['BTC', 'BCH', 'EOS', 'ETH', 'IOT', 'XRP', 'LTC'],
 	nomination = 'USD',
 	seriesOptions = [],
 	seriesCounter = 0,
@@ -129,6 +130,7 @@ var rute = new Navigo(null, true, '#!');
 rute
 	.on(gotoState)
 	.on('/:coins/in/:nomination/recent/:scale', function(input) {
+		$('#container').fadeOut();
 		coins = input.coins
 			.replace(/^-|-$/, '')
 			.toUpperCase()
@@ -138,7 +140,7 @@ rute
 		(seriesOptions = []),
 			(seriesCounter = 0),
 			fetch(function() {
-				$('#graph').fadeIn();
+				$('#container').fadeIn();
 			});
 	})
 	.on('/hours', function() {
@@ -162,17 +164,17 @@ function prevent(event) {
 }
 
 $('.open-about').click(function(event) {
-	document.getElementById('modal-about').style.width = '400px';
+	document.getElementById('modal-about').style.right = '0';
 	prevent(event);
 });
 
 $('.close-about').click(function(event) {
-	document.getElementById('modal-about').style.width = '0px';
+	document.getElementById('modal-about').style.right = '-401px';
 	prevent(event);
 });
 
-function gotoState(avoidAction) {
-	$('#graph').fadeOut();
+function gotoState(avoidAction = false) {
+	$('#container').fadeOut();
 	rute.navigate(
 		['', coins.join('-'), 'in', nomination, 'recent', defaultFrame].join('/').toLowerCase()
 	);
@@ -212,7 +214,7 @@ var graph = {};
 function createChart(seriesOptions, coins, nomination) {
 	graph = Highcharts.stockChart('graph', {
 		title: {
-			text: 'Relative development of crypto coins the ' + frame.name.toLowerCase(),
+			text: 'Relative development of crypto-coins the ' + frame.name.toLowerCase(),
 		},
 		subtitle: {
 			text: getSubtitle(),
@@ -248,6 +250,15 @@ function createChart(seriesOptions, coins, nomination) {
 		},
 
 		series: seriesOptions,
+
+		/*labels: {
+			items: [
+				{
+					html: 'abc',
+					style: 'bottom:100px;left:100px',
+				},
+			],
+		},*/
 	});
 }
 

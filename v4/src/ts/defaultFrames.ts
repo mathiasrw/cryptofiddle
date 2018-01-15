@@ -1,6 +1,6 @@
 import {intervals} from './defaultIntervals';
 
-export const frames = {
+export const frames_ = {
 	"hours": {
 		name: "Last few hours",
 		urlpath: '/data/histominute',

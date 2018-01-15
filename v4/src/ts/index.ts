@@ -22,23 +22,11 @@ setState({
 	coins: ['BTC', 'BCH', 'EOS', 'ETH', 'IOT', 'XRP', 'LTC'],
 	selectedFrame: 'hours',
 	defaultFrame: 'hours',
-	coinlist: JSON.parse(localStorage.getItem("coinlist") || '{}'),
+	coinlist: JSON.parse(localStorage.getItem('coinlist') || '{}'),
 });
 
 rute.resolve();
 
-
-
 // var graph = createChart(seriesOptions, coins, nomination, coinlist);
 
 // createChart(seriesOptions, state);
-
-
-
-
-
-
-
-
-
-
