@@ -124,25 +124,47 @@ frames = {
 
 var frame = frames[defaultFrame];
 
+
+let show:any = {};
+
+show.about = function(){
+	document.getElementById('modal-about').style.right = '0';
+}
+
+show.selectCoins = function(){
+	document.getElementById('modal-coins').style.right = '0';
+}
+
+$('.close-about').click(function(event) {
+	document.getElementById('modal-about').style.right = '-401px';
+	prevent(event);
+});
+
+$('.close-coins').click(function(event) {
+	document.getElementById('modal-coins').style.right = '-401px';
+	prevent(event);
+});
+
+
 Navigo.MATCH_REGEXP_FLAGS = 'i';
 
 var rute = new Navigo(null, true, '#!');
-rute
-	.on(gotoState)
-	.on('/:coins/in/:nomination/recent/:scale', function(input) {
-		$('#container').fadeOut();
+
+function setDefaultsFromUrl(input) {
+	$('#container').fadeOut();
+	if (input.coins)
 		coins = input.coins
 			.replace(/^-|-$/, '')
 			.toUpperCase()
 			.split('-');
-		nomination = input.nomination.toUpperCase();
-		frame = frames[input.scale.toLowerCase()] || frames[defaultFrame];
-		(seriesOptions = []),
-			(seriesCounter = 0),
-			fetch(function() {
-				$('#container').fadeIn();
-			});
-	})
+	if (input.nomination) nomination = input.nomination.toUpperCase();
+
+	if (input.scale) frame = frames[input.scale.toLowerCase()] || frames[defaultFrame];
+}
+
+
+rute
+	.on(gotoState)
 	.on('/hours', function() {
 		defaultFrame = 'hours';
 		gotoState();
@@ -155,7 +177,37 @@ rute
 		defaultFrame = 'years';
 		gotoState();
 	})
-
+	.on('/years', function() {
+		defaultFrame = 'years';
+		gotoState();
+	})
+	.on('/about', function() {
+		show.about();
+	})
+	.on('/coins', function() {
+		show.selectCoins();
+	})
+	.on('/:coins', function(input) {
+		setDefaultsFromUrl(input);
+		gotoState();
+	})
+	.on('/:coins/in/:nomination', function(input) {
+		setDefaultsFromUrl(input);
+		gotoState();
+	})
+	.on('/:coins/recent/:scale', function(input) {
+		setDefaultsFromUrl(input);
+		gotoState();
+	})
+	.on('/:coins/in/:nomination/recent/:scale', function(input) {
+		setDefaultsFromUrl(input);
+		seriesOptions = [];
+		seriesCounter = 0;
+		fetch(function() {
+			$('#container').fadeIn();
+		});
+	})
+	.notFound(gotoState)
 	.resolve();
 
 function prevent(event) {
@@ -163,15 +215,6 @@ function prevent(event) {
 	event.stopPropagation();
 }
 
-$('.open-about').click(function(event) {
-	document.getElementById('modal-about').style.right = '0';
-	prevent(event);
-});
-
-$('.close-about').click(function(event) {
-	document.getElementById('modal-about').style.right = '-401px';
-	prevent(event);
-});
 
 function gotoState(avoidAction = false) {
 	$('#container').fadeOut();
