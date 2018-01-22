@@ -5,9 +5,9 @@
   "main": "index.html",
   "scripts": {
     "test": "echo 'GO'",
-    "build": " parcel build src/index.html --public-url '/'",
-    "start": "parcel src/index.html",
-    "publish": "(shx rm -rf ./dist/ || true) && npm run build && surge ./dist/ cryptofiddle.com"
+    "build": "parcel build src/index.html --public-url '/' && parcel build src/200.html",
+    "start": "parcel src/index.html -o",
+    "publish": "(shx rm -rf ./dist/ || true) && npm run build && rexreplace '#!/' '/' ./dist/index.html && cp ./dist/index.html ./dist/200.html && surge ./dist/ cryptofiddle.com"
   },
   "author": "mathiasrw",
   "license": "MIT",
@@ -22,7 +22,9 @@
   "devDependencies": {
     "node-sass": "^4.7.2",
     "parcel-bundler": "^1.4.1",
+    "parcel-plugin-appcache": "0.0.3",
     "purecss": "^1.0.0",
+    "rexreplace": "^2.5.3",
     "shx": "^0.2.2",
     "typescript": "^2.6.2"
   }

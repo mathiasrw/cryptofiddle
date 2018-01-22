@@ -124,16 +124,17 @@ frames = {
 
 var frame = frames[defaultFrame];
 
+let show: any = {};
 
-let show:any = {};
-
-show.about = function(){
+show.about = function() {
 	document.getElementById('modal-about').style.right = '0';
-}
+	gotoState(true);
+};
 
-show.selectCoins = function(){
+show.selectCoins = function() {
 	document.getElementById('modal-coins').style.right = '0';
-}
+	gotoState(true);
+};
 
 $('.close-about').click(function(event) {
 	document.getElementById('modal-about').style.right = '-401px';
@@ -145,23 +146,35 @@ $('.close-coins').click(function(event) {
 	prevent(event);
 });
 
-
 Navigo.MATCH_REGEXP_FLAGS = 'i';
 
-var rute = new Navigo(null, true, '#!');
+var useLocationHash = true;
+if (process.env.NODE_ENV === 'production') useLocationHash = false;
+var rute = new Navigo('http://cryptofiddle.com/', useLocationHash, '#!');
 
 function setDefaultsFromUrl(input) {
 	$('#container').fadeOut();
 	if (input.coins)
 		coins = input.coins
-			.replace(/^-|-$/, '')
+			.replace(/{[^a-z0-9-]/gi, '')
 			.toUpperCase()
-			.split('-');
+			.split('-')
+			.filter(x => x !== '');
+
 	if (input.nomination) nomination = input.nomination.toUpperCase();
 
 	if (input.scale) frame = frames[input.scale.toLowerCase()] || frames[defaultFrame];
 }
 
+let mainHandle = '/:coins/in/:nomination/recent/:scale';
+var mainHandleFunc = function(input) {
+	setDefaultsFromUrl(input);
+	seriesOptions = [];
+	seriesCounter = 0;
+	fetch(function() {
+		$('#container').fadeIn();
+	});
+};
 
 rute
 	.on(gotoState)
@@ -191,6 +204,10 @@ rute
 		setDefaultsFromUrl(input);
 		gotoState();
 	})
+	.on('/:coins/:nomination', function(input) {
+		setDefaultsFromUrl(input);
+		gotoState();
+	})
 	.on('/:coins/in/:nomination', function(input) {
 		setDefaultsFromUrl(input);
 		gotoState();
@@ -199,14 +216,7 @@ rute
 		setDefaultsFromUrl(input);
 		gotoState();
 	})
-	.on('/:coins/in/:nomination/recent/:scale', function(input) {
-		setDefaultsFromUrl(input);
-		seriesOptions = [];
-		seriesCounter = 0;
-		fetch(function() {
-			$('#container').fadeIn();
-		});
-	})
+	.on(mainHandle, mainHandleFunc)
 	.notFound(gotoState)
 	.resolve();
 
@@ -215,12 +225,22 @@ function prevent(event) {
 	event.stopPropagation();
 }
 
-
 function gotoState(avoidAction = false) {
 	$('#container').fadeOut();
+
+	if (avoidAction) {
+		// rute.pause(); // not working: https://github.com/krasimir/navigo/issues/172
+		rute.off(mainHandle);
+	}
+
 	rute.navigate(
 		['', coins.join('-'), 'in', nomination, 'recent', defaultFrame].join('/').toLowerCase()
 	);
+
+	if (avoidAction) {
+		// rute.resume(); // not working: https://github.com/krasimir/navigo/issues/172
+		//rute.on(mainHandle, mainHandleFunc);
+	}
 }
 
 function fetch(cb) {
