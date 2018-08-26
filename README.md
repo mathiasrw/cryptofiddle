@@ -1,4 +1,6 @@
 # CryptoFiddle.com
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fmathiasrw%2Fcryptofiddle.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Fmathiasrw%2Fcryptofiddle?ref=badge_shield)
+
 
 _See the relative development of crypto coins_
 
@@ -20,3 +22,7 @@ This is the source of [CryptoFiddle.com](http://CryptoFiddle.com) and is based o
 - Make codestructure better!
 - Get going witn ES6?
 - Try out Vue?
+
+
+## License
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fmathiasrw%2Fcryptofiddle.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Fmathiasrw%2Fcryptofiddle?ref=badge_large)
