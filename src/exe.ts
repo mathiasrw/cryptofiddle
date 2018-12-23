@@ -24,7 +24,7 @@ declare const Highcharts: any;
 declare const $: any;
 var data;
 
-var coins = ['BTC', 'BCH', 'EOS', 'ETH', 'IOT', 'XRP', 'LTC'],
+var coins = ['BTC', 'BCH', 'EOS', 'ETH', 'IOT', 'XRP', 'BSV'],
 	nomination = 'USD',
 	seriesOptions = [],
 	seriesCounter = 0,
@@ -150,7 +150,9 @@ Navigo.MATCH_REGEXP_FLAGS = 'i';
 
 var useLocationHash = true;
 if (process.env.NODE_ENV === 'production') useLocationHash = false;
-var rute = new Navigo('http://cryptofiddle.com/', useLocationHash, '#!');
+
+var urlBase = location.protocol+'//'+location.hostname+(location.port ? ':'+location.port: '')+'/';
+var rute = new Navigo(urlBase, useLocationHash, '#!');
 
 function setDefaultsFromUrl(input) {
 	$('#container').fadeOut();

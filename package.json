@@ -4,27 +4,27 @@
   "description": "How did your crypto-coins perform?",
   "main": "index.html",
   "scripts": {
-    "test": "echo 'GO'",
-    "build": "parcel build src/index.html --public-url '/' && parcel build src/200.html",
-    "start": "parcel src/index.html -o",
+    "test": "echo 'No test implemented'",
+    "build": "parcel build src/index.html --public-url '/'",
+    "start": "parcel src/index.html -o dist/",
     "publish": "(shx rm -rf ./dist/ || true) && npm run build && rexreplace '#!/' '/' ./dist/index.html && cp ./dist/index.html ./dist/200.html && surge ./dist/ cryptofiddle.com"
   },
   "author": "mathiasrw",
   "license": "MIT",
   "dependencies": {
-    "pubsubway": "^0.21.0",
-    "alasql": "^0.4.4",
+    "alasql": "^0.4.5",
     "highcharts": "^6.0.4",
     "jquery": "^3.2.1",
     "navigo": "^7.0.0",
+    "pubsubway": "^0.21.0",
     "r2": "^2.0.0"
   },
   "devDependencies": {
     "node-sass": "^4.7.2",
-    "parcel-bundler": "^1.4.1",
-    "parcel-plugin-appcache": "0.0.3",
+    "parcel-bundler": "^1.8.1",
+    "posthtml-md": "git+https://github.com/mathiasrw/posthtml-md.git",
     "purecss": "^1.0.0",
-    "rexreplace": "^2.5.3",
+    "rexreplace": "^3.0.1",
     "shx": "^0.2.2",
     "typescript": "^2.6.2"
   }
