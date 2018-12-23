@@ -24,7 +24,7 @@ declare const Highcharts: any;
 declare const $: any;
 var data;
 
-var coins = ['BTC', 'BCH', 'EOS', 'ETH', 'IOT', 'XRP', 'BSV'],
+var coins = ['BTC', 'BSV', 'BCH', 'EOS', 'ETH', 'IOT', 'XRP'],
 	nomination = 'USD',
 	seriesOptions = [],
 	seriesCounter = 0,
@@ -89,7 +89,7 @@ var intervals = {
 	},
 };
 
-frames = {
+var frames = {
 	hours: {
 		name: 'Last few hours',
 		urlpath: '/data/histominute',
@@ -110,13 +110,7 @@ frames = {
 		name: 'Last few years',
 		urlpath: '/data/histoday',
 		rangeSelector: {
-			buttons: [
-				intervals.all,
-				intervals['ytd'],
-				intervals['3y'],
-				intervals['1y'],
-				intervals['6m'],
-			],
+			buttons: [intervals.all, intervals['ytd'], intervals['3y'], intervals['1y'], intervals['6m']],
 			selected: 0,
 		},
 	},
@@ -151,7 +145,8 @@ Navigo.MATCH_REGEXP_FLAGS = 'i';
 var useLocationHash = true;
 if (process.env.NODE_ENV === 'production') useLocationHash = false;
 
-var urlBase = location.protocol+'//'+location.hostname+(location.port ? ':'+location.port: '')+'/';
+var urlBase =
+	location.protocol + '//' + location.hostname + (location.port ? ':' + location.port : '') + '/';
 var rute = new Navigo(urlBase, useLocationHash, '#!');
 
 function setDefaultsFromUrl(input) {
@@ -161,7 +156,7 @@ function setDefaultsFromUrl(input) {
 			.replace(/{[^a-z0-9-]/gi, '')
 			.toUpperCase()
 			.split('-')
-			.filter(x => x !== '');
+			.filter((x) => x !== '');
 
 	if (input.nomination) nomination = input.nomination.toUpperCase();
 
@@ -330,12 +325,12 @@ function createChart(seriesOptions, coins, nomination) {
 Highcharts.setOptions({
 	colors: [
 		'#F9C80E',
-		'#854CBA',
+		'#2288CC',
 		'#55BF3B',
 		'#ff0066',
-		'#2288CC',
-		'#DD3322',
+		'#854CBA',
 		'#bb4488',
+		'#DD3322',
 		'#99aa00',
 		'#5885BC',
 	],

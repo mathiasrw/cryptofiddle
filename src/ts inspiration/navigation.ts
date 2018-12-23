@@ -9,10 +9,12 @@ console.log(alasql('select 1+2'));
 
 Navigo.MATCH_REGEXP_FLAGS = 'i';
 
-export function gotoState(avoidAction: boolean){
+export function gotoState(avoidAction: boolean) {
 	let state = getState();
 	$('#graph').fadeOut();
-	rute.navigate(`${state.coins.join('-')}/in/${state.nomination}/recent/${state.selectedFrame}`.toLowerCase());
+	rute.navigate(
+		`${state.coins.join('-')}/in/${state.nomination}/recent/${state.selectedFrame}`.toLowerCase()
+	);
 }
 go.when('state/updated', gotoState);
 
@@ -22,7 +24,10 @@ rute
 	.on(gotoState)
 	.on('/:coins/in/:nomination/recent/:scale', async (input: object) => {
 		setState({
-			coins: input['coins'].replace(/^-|-$/, '').toUpperCase().split('-'),
+			coins: input['coins']
+				.replace(/^-|-$/, '')
+				.toUpperCase()
+				.split('-'),
 			nomination: input['nomination'].toUpperCase(),
 			frame: frames[input['scale'].toLowerCase()] || frames[state.defaultFrame],
 		});
@@ -30,15 +35,12 @@ rute
 		setState({graph});
 		$('#graph').fadeIn();
 	})
-	.on('/hours', function () {
+	.on('/hours', function() {
 		setState({selectedFrame: 'hours'}, true);
 	})
-	.on('/weeks', function () {
+	.on('/weeks', function() {
 		setState({selectedFrame: 'weeks'}, true);
 	})
-	.on('/years', function () {
+	.on('/years', function() {
 		setState({selectedFrame: 'years'}, true);
 	});
-
-
-

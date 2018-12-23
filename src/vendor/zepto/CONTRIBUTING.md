@@ -9,7 +9,7 @@ In order for your code to make it in, several conditions must be met:
   to code.
 * Please talk to the maintainers (@madrobby and @mislav) first if you want
   to write a plugin, those are better kept in their own repositories.
-* Fix only ONE thing or have only ONE feature in your pull request. 
+* Fix only ONE thing or have only ONE feature in your pull request.
   If you have multiple unrelated code updates, please submit a separate pull request for each one.
 * **Your pull request must be written in English and be accompanied by a
   detailed description**, ideally something we can use as documentation.
@@ -41,5 +41,4 @@ Whew, now that we have that out of the way thanks again!
 * Use blank lines to separate "paragraphs" of code for readability
 * Use comments to describe non-obvious code behavior
 
-
-  [optional]: http://mislav.uniqpath.com/2010/05/semicolons/
+[optional]: http://mislav.uniqpath.com/2010/05/semicolons/

@@ -1,17 +1,16 @@
 import * as $ from 'jquery';
 
-function prevent(event: any){
+function prevent(event: any) {
 	event.preventDefault();
-    event.stopPropagation();
+	event.stopPropagation();
 }
 
-$('Q.open-about').click(function(event: any){
-	document.getElementById("modal-about").style.width = "400px";
+$('Q.open-about').click(function(event: any) {
+	document.getElementById('modal-about').style.width = '400px';
 	prevent(event);
 });
 
-
-$('Q.close-about').click(function(event: any){
-	document.getElementById("modal-about").style.width = "0px";
+$('Q.close-about').click(function(event: any) {
+	document.getElementById('modal-about').style.width = '0px';
 	prevent(event);
 });

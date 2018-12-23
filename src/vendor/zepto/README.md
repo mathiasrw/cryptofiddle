@@ -23,7 +23,7 @@ the build commands.
 
 You will need Node.js installed on your system.
 
-~~~ sh
+```sh
 $ npm install
 $ npm run-script dist
 
@@ -33,7 +33,7 @@ $ MODULES="zepto event data" npm run-script dist
 # on Windows
 c:\zepto> SET MODULES=zepto event data
 c:\zepto> npm run-script dist
-~~~
+```
 
 The resulting files are:
 
@@ -42,7 +42,7 @@ The resulting files are:
 
 If you install CoffeeScript globally, you can run `make` directly:
 
-~~~ sh
+```sh
 # one-time operation
 $ npm install coffee-script --global
 
@@ -52,7 +52,7 @@ $ MODULES="zepto event data ..." ./make dist
 # on Windows
 c:\zepto> SET MODULES=zepto event data
 c:\zepto> coffee make dist
-~~~
+```
 
 ## Zepto modules
 
@@ -205,30 +205,30 @@ This will submit a pull request to us that we can review.
 
 You will need to install [PhantomJS][]. On OS X, that's easy:
 
-~~~ sh
+```sh
 $ brew install phantomjs
-~~~
+```
 
 To run the automated tests:
 
-~~~ sh
+```sh
 $ npm test
-~~~
+```
 
 To run a test server, which you can hit with your browsers and devices:
 
-~~~ sh
+```sh
 $ npm start
-~~~
+```
 
 Go to `http://your-ip-address:3000/` on your browser and follow the
 instructions. For your convenience test failures and exceptions will be
 reported to the the console you started the test server in (as well as
 the browser console if available).
 
-  [zeptojs.com]: http://zeptojs.com
-  [issues]: https://github.com/madrobby/zepto/issues
-  [docs]: https://github.com/madrobby/zepto/tree/gh-pages#readme
-  [mkd]: https://help.github.com/articles/creating-and-highlighting-code-blocks/
-  [evidence.js]: https://github.com/tobie/Evidence
-  [phantomjs]: http://phantomjs.org/download.html
+[zeptojs.com]: http://zeptojs.com
+[issues]: https://github.com/madrobby/zepto/issues
+[docs]: https://github.com/madrobby/zepto/tree/gh-pages#readme
+[mkd]: https://help.github.com/articles/creating-and-highlighting-code-blocks/
+[evidence.js]: https://github.com/tobie/Evidence
+[phantomjs]: http://phantomjs.org/download.html

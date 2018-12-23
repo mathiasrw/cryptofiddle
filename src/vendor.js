@@ -10,10 +10,8 @@ declare global {
     var Navigo: any;
 }*/
 
-
 Highcharts = require('highcharts/highstock');
 Navigo = require('navigo');
 $ = require('jquery');
 alasql = require('alasql');
 go = require('pubsubway');
-

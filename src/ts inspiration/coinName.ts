@@ -1,5 +1,4 @@
-import { getState } from './state';
-
+import {getState} from './state';
 
 export function getCoinName(symbol: string, full = false) {
 	const state = getState();

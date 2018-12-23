@@ -1,31 +1,43 @@
 {
-  "name": "cryptofiddle",
-  "version": "4.0.0",
-  "description": "How did your crypto-coins perform?",
-  "main": "index.html",
-  "scripts": {
-    "test": "echo 'No test implemented'",
-    "build": "parcel build src/index.html --public-url '/'",
-    "start": "parcel src/index.html -o dist/",
-    "publish": "(shx rm -rf ./dist/ || true) && npm run build && rexreplace '#!/' '/' ./dist/index.html && cp ./dist/index.html ./dist/200.html && surge ./dist/ cryptofiddle.com"
-  },
-  "author": "mathiasrw",
-  "license": "MIT",
-  "dependencies": {
-    "alasql": "^0.4.5",
-    "highcharts": "^6.0.4",
-    "jquery": "^3.2.1",
-    "navigo": "^7.0.0",
-    "pubsubway": "^0.21.0",
-    "r2": "^2.0.0"
-  },
-  "devDependencies": {
-    "node-sass": "^4.7.2",
-    "parcel-bundler": "^1.8.1",
-    "posthtml-md": "git+https://github.com/mathiasrw/posthtml-md.git",
-    "purecss": "^1.0.0",
-    "rexreplace": "^3.0.1",
-    "shx": "^0.2.2",
-    "typescript": "^2.6.2"
-  }
+	"name": "cryptofiddle",
+	"version": "4.0.1",
+	"description": "How did your crypto-coins perform?",
+	"main": "index.html",
+	"scripts": {
+		"test": "echo 'No test implemented'",
+		"build": "parcel build src/index.html --public-url '/'",
+		"start": "parcel src/index.html",
+		"release": "(shx rm -rf ./dist/ || true) && npm run build && rexreplace '#!/' '/' ./dist/index.html && cp ./dist/index.html ./dist/200.html && surge ./dist/ cryptofiddle.com",
+		"format": "yarn prettier --write",
+		"test-format": "yarn prettier --list-different || ('Plz fix formatting with `npm run format`.' && exit 1)",
+		"prettier": "prettier '**/*.{json,md,scss,css,js,ts}'"
+	},
+	"author": "mathiasrw",
+	"license": "MIT",
+	"dependencies": {
+		"alasql": "^0.4.5",
+		"highcharts": "^6.0.4",
+		"jquery": "^3.2.1",
+		"navigo": "^7.0.0",
+		"pubsubway": "^0.21.0",
+		"r2": "^2.0.0"
+	},
+	"devDependencies": {
+		"node-sass": "^4.7.2",
+		"parcel-bundler": "^1.8.1",
+		"posthtml-md": "git+https://github.com/mathiasrw/posthtml-md.git",
+		"prettier": "github:prettier/prettier",
+		"purecss": "^1.0.0",
+		"rexreplace": "^3.0.1",
+		"shx": "^0.2.2",
+		"typescript": "^2.6.2"
+	},
+	"prettier": {
+		"useTabs": true,
+		"printWidth": 100,
+		"singleQuote": true,
+		"arrowParens": "always",
+		"bracketSpacing": false,
+		"trailingComma": "es5"
+	}
 }
